@@ -1,0 +1,17 @@
+#form {
+    padding:10px;
+    display: flex;
+}
+
+div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#form div {
+    margin:0 10px 0 10px;
+}
+
+.card img {
+    width:50px;
+}

@@ -5,8 +5,104 @@
 {% endblock %}
 
 {% block body %}
+    <div class="container">
+    {# {{ dump()}} #}
+        <h1>Bienvenue sur la page Météo</h1>
+        <h2> Météo à {{data['name']}} ({{data['coord']['lon']}}, {{data['coord']['lat']}}) </h2>
+        <!-- gestion du formulaire -->
+        <div class="row">
+            {{ form(form)}}
+            <div id="infoposition"></div>
+        </div>
+       
+        <div class="row">
+            <div class="col-md-4 vignette card">
+                {# <h3> {{data['weather'][0]['main']}} </h3>  #}
+                <img src="uploads/{{data['weather'][0]['icon']}}.png"/>
+                <p> {{ data['weather'][0]['description']}}
+            </div>
 
-    <h1>Bienvenue sur la page Météo</h1>
+             <div class="col-md-4 card">
+                <h3> Vent </h3> 
+                <span> {{ data['wind']['speed']}} m/s </span>
+                <span> {{ data['wind']['deg']}}      </span>
+                <span> Couverture nuageuse {{ data['clouds']['all']}} %     </span>
+            </div>
 
+            <div class="col-md-4 card">
+                <h3> Soleil </h3> 
+                <p> Lever : {{ data['sys']['sunrise']|date("H:i:s", "Europe/Paris")}}
+                <p> Coucher: {{ data['sys']['sunset']|date("H:i:s", "Europe/Paris")}}
+            </div>
+
+        </div>
+        
+
+        <div class="table-responsive">
+             <h3> Données </h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td> Température</td>
+                        <td> {{data['main']['temp']}}°C </td>
+                    </tr>
+                    <tr>
+                        <td> Température ressentie </td>
+                        <td> {{data['main']['feels_like']}}°C </td>
+                    </tr>
+                    <tr>
+                        <td> Température min</td>
+                        <td> {{data['main']['temp_min']}}°C </td>
+                    </tr>
+                    <tr>
+                        <td> Température max</td>
+                        <td> {{data['main']['temp_max']}}°C </td>
+                    </tr>
+                    <tr>
+                        <td> Pression</td>
+                        <td> {{data['main']['pressure']}}hpa </td>
+                    </tr>
+                    <tr>
+                        <td> Humidité</td>
+                        <td> {{data['main']['humidity']}} % </td>
+                    </tr>
+
+                    {# {%for key, value in data['main'] %}
+                    <tr>
+                        <td> {{key}} </td>
+                        <td> {{value}} </td>
+                    </tr>
+                    {% endfor %} #}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <h3> Prévision du jours </h3>
+            <div class="table-responsive">
+             <h3> Données </h3>
+            <table class="table">
+                <tbody>
+                    {%for key, value in dataPrevisionnel['list'] %}
+                    <tr>
+                        <td> {{value['dt_txt']|date("D d M H:i","Europe/Paris")}}
+                            <img src="uploads/{{value['weather'][0]['icon']}}.png"/>
+                        </td>
+                        <td>
+                            <span class="badge badge-secondary">{{value['main']['temp']}}°C</span>
+                            <span> {{value['weather'][0]['description']}} </span>
+                            <span>{{value['wind']['speed']}}m/s</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        </div>
+    
+
+        
+    </div>
 
 {% endblock %}
